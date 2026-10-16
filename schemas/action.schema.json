@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mobile-use-lite.local/schemas/action.schema.json",
+  "title": "Mobile-Use Lite Action (v0.1)",
+  "description": "One structured GUI action. Coordinates are integers in 0..999 (normalized to the current screenshot). Unknown type is rejected.",
+  "oneOf": [
+    { "$ref": "#/$defs/click" },
+    { "$ref": "#/$defs/swipe" },
+    { "$ref": "#/$defs/type" },
+    { "$ref": "#/$defs/back" },
+    { "$ref": "#/$defs/wait" },
+    { "$ref": "#/$defs/done" }
+  ],
+  "$defs": {
+    "coord": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 999
+    },
+    "reason": {
+      "type": "string"
+    },
+    "click": {
+      "type": "object",
+      "required": ["type", "x", "y"],
+      "properties": {
+        "type": { "const": "click" },
+        "x": { "$ref": "#/$defs/coord" },
+        "y": { "$ref": "#/$defs/coord" },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "swipe": {
+      "type": "object",
+      "required": ["type", "x1", "y1", "x2", "y2"],
+      "properties": {
+        "type": { "const": "swipe" },
+        "x1": { "$ref": "#/$defs/coord" },
+        "y1": { "$ref": "#/$defs/coord" },
+        "x2": { "$ref": "#/$defs/coord" },
+        "y2": { "$ref": "#/$defs/coord" },
+        "duration_ms": { "type": "integer", "minimum": 1, "default": 300 },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "type" },
+        "text": { "type": "string" },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "back": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "back" },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "wait": {
+      "type": "object",
+      "required": ["type"],
+      "anyOf": [
+        { "required": ["duration_ms"] },
+        { "required": ["ms"] }
+      ],
+      "properties": {
+        "type": { "const": "wait" },
+        "duration_ms": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "ms": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    },
+    "done": {
+      "type": "object",
+      "required": ["type"],
+      "anyOf": [
+        { "required": ["success"] },
+        { "required": ["status"] }
+      ],
+      "properties": {
+        "type": { "const": "done" },
+        "success": { "type": "boolean" },
+        "status": { "enum": ["succeeded", "failed"] },
+        "message": { "type": "string" },
+        "reason": { "$ref": "#/$defs/reason" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

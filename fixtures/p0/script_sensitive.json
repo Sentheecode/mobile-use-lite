@@ -1,0 +1,27 @@
+{
+  "script_id": "sensitive_v1",
+  "goal": "打开示例应用并进入账号页",
+  "device": {
+    "platform": "mock",
+    "width_px": 1080,
+    "height_px": 2400
+  },
+  "frames": [
+    { "id": "home", "sensitive": false, "image": "fixtures/p0/s_turn_001_home.png" },
+    { "id": "login", "sensitive": true, "image": "fixtures/p0/s_turn_002_login.png" },
+    { "id": "done", "sensitive": false, "image": "fixtures/p0/s_turn_003_done.png" }
+  ],
+  "stub": {
+    "by_frame": {
+      "home": [
+        { "type": "click", "x": 512, "y": 780, "reason": "点击登录入口" }
+      ],
+      "login": [
+        { "type": "type", "text": "demo_user", "reason": "输入账号" }
+      ],
+      "done": [
+        { "type": "done", "status": "succeeded", "message": "登录流程完成（mock）", "reason": "任务完成" }
+      ]
+    }
+  }
+}

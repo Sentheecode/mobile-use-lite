@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mobile-use-lite.local/schemas/turn.schema.json",
+  "title": "Mobile-Use Lite Agent Turn Envelope (v0.1)",
+  "description": "One agent turn: an ordered list of actions plus optional hints. If any action is invalid the whole envelope is rejected (E_SCHEMA). If 'done' appears it must be the last action.",
+  "type": "object",
+  "required": ["actions"],
+  "properties": {
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "action.schema.json" }
+    },
+    "sensitive_hint": { "type": "boolean" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

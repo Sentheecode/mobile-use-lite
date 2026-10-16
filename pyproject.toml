@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mobile-use-lite"
+version = "0.1.0"
+description = "Self-hosted mobile GUI agent (P0 stub loop)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+mobile-use-lite = "mobile_use_lite.__main__:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

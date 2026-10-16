@@ -1,0 +1,19 @@
+{
+  "script_id": "invalid_v1",
+  "goal": "触发非法动作演示",
+  "device": {
+    "platform": "mock",
+    "width_px": 1080,
+    "height_px": 2400
+  },
+  "frames": [
+    { "id": "home", "sensitive": false, "image": "fixtures/p0/turn_001_home.png" }
+  ],
+  "stub": {
+    "by_frame": {
+      "home": [
+        { "type": "teleport", "x": 1, "y": 2, "reason": "未知动作类型，应触发 E_SCHEMA" }
+      ]
+    }
+  }
+}
